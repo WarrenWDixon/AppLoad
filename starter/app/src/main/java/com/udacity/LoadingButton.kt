@@ -26,6 +26,7 @@ class LoadingButton @JvmOverloads constructor(
         isAntiAlias = true
         color = ContextCompat.getColor(context, R.color.white)
         textSize = 50.0f
+
     }
     private var buttonState: ButtonState by Delegates.observable<ButtonState>(ButtonState.Completed) { p, old, new ->
 
@@ -40,10 +41,11 @@ class LoadingButton @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         canvas?.drawColor(ContextCompat.getColor(context, R.color.buttonBackground))
-        canvas?.drawRect(0f, 0f, 100f, 100f, buttonBackgroundPaint )
+        canvas?.drawRect(0f, 0f, 200f, 200f, buttonBackgroundPaint )
        // if (buttonState == ButtonState.Loading) {
-            canvas?.drawRect(0f, 0f, 100f, 100f, buttonBackgroundPaint)
+            canvas?.drawRect(0f, 0f, 0.0f, 0.0f, buttonBackgroundPaint)
        // }
+        //buttonTextPaint.textAlign = Paint.Align.CENTER
         canvas?.drawText("Download", 200.0f, 75.0f, buttonTextPaint)
 
     }

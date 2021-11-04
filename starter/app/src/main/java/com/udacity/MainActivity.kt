@@ -10,6 +10,7 @@ import android.content.IntentFilter
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import kotlinx.android.synthetic.main.activity_main.*
@@ -23,6 +24,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var notificationManager: NotificationManager
     private lateinit var pendingIntent: PendingIntent
     private lateinit var action: NotificationCompat.Action
+    private var repository: Repository = Repository.NONE
+    private enum class Repository(val url: String) {
+        NONE(""),
+        BUMPTECH("https://github.com/bumptech/glide"),
+        UDACITY("https://github.com/udacity/nd940-c3-advanced-android-programming-project-starter"),
+        RETROFIT("https://github.com/square/retrofit")
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,6 +70,29 @@ class MainActivity : AppCompatActivity() {
         private const val CHANNEL_ID = "channelId"
     }
 
-    fun onRadioButtonClicked(view: View) {}
+    fun onRadioButtonClicked(view: View) {
+        if (view is RadioButton) {
+            // Is the button now checked?
+            val checked = view.isChecked
+
+            // Check which radio button was clicked
+            when (view.getId()) {
+                R.id.radio_glide ->
+                    if (checked) {
+                        repository = Repository.BUMPTECH
+                    }
+                R.id.radio_udacity ->
+                    if (checked) {
+                        repository = Repository.UDACITY
+                    }
+                R.id.radio_retrofit ->
+                    if (checked) {
+                        repository = Repository.RETROFIT
+                    }
+                else ->
+                    repository = Repository.NONE
+            }
+        }
+    }
 
 }
