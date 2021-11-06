@@ -2,6 +2,7 @@ package com.udacity
 
 import android.app.NotificationManager
 import android.content.Context
+import android.graphics.BitmapFactory
 import androidx.core.app.NotificationCompat
 
 // Notification ID.
@@ -16,6 +17,16 @@ private val FLAGS = 0
  * @param context, activity context.
  */
 fun NotificationManager.sendNotification(messageBody: String, applicationContext: Context) {
+    // TODO: Step 2.0 add style
+    val cicadaImage = BitmapFactory.decodeResource(
+        applicationContext.resources,
+        R.drawable.cicada
+    )
+
+    val bigPicStyle = NotificationCompat.BigPictureStyle()
+        .bigPicture(cicadaImage)
+        .bigLargeIcon(null)
+
     // Build the notification
     val builder = NotificationCompat.Builder(
         applicationContext,
@@ -25,6 +36,7 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         .setContentTitle(applicationContext
             .getString(R.string.notification_title))
         .setContentText(messageBody)
+        .setStyle(bigPicStyle)
 
     // Deliver the notification
     notify(NOTIFICATION_ID, builder.build())
