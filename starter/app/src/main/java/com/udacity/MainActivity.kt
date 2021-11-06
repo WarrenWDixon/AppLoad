@@ -9,8 +9,10 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.RadioButton
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import kotlinx.android.synthetic.main.activity_main.*
@@ -33,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d("WWD", "in onCreate main activity")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
@@ -46,13 +49,21 @@ class MainActivity : AppCompatActivity() {
 
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
+            Log.d("WWD", "in receiver on receive")
             val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
         }
     }
 
     private fun download() {
+        Log.d("WWD", "in download")
+        if (repository == Repository.NONE) {
+            Toast.makeText(this, "PLEASE SELECT A URL ABOVE", Toast.LENGTH_LONG).show()
+            return;
+        }
+        var downloadUrl = repository.url + "archive/master.zip"
+        Log.d("WWD", "the url is " + downloadUrl)
         val request =
-            DownloadManager.Request(Uri.parse(URL))
+            DownloadManager.Request(Uri.parse(downloadUrl))
                 .setTitle(getString(R.string.app_name))
                 .setDescription(getString(R.string.app_description))
                 .setRequiresCharging(false)
@@ -71,6 +82,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onRadioButtonClicked(view: View) {
+        Log.d("WWD", "radio button clicked")
         if (view is RadioButton) {
             // Is the button now checked?
             val checked = view.isChecked
