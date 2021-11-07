@@ -1,7 +1,9 @@
 package com.udacity
 
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.graphics.BitmapFactory
 import androidx.core.app.NotificationCompat
 
@@ -17,7 +19,17 @@ private val FLAGS = 0
  * @param context, activity context.
  */
 fun NotificationManager.sendNotification(messageBody: String, applicationContext: Context) {
-    // TODO: Step 2.0 add style
+
+    val contentIntent = Intent(applicationContext, DetailActivity::class.java)
+
+    // TODO: Step 1.12 create PendingIntent
+    val contentPendingIntent = PendingIntent.getActivity(
+        applicationContext,
+        NOTIFICATION_ID,
+        contentIntent,
+        PendingIntent.FLAG_UPDATE_CURRENT
+    )
+
     val cicadaImage = BitmapFactory.decodeResource(
         applicationContext.resources,
         R.drawable.cicada
@@ -36,7 +48,14 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         .setContentTitle(applicationContext
             .getString(R.string.notification_title))
         .setContentText(messageBody)
+        .setContentIntent(contentPendingIntent)
         .setStyle(bigPicStyle)
+        .addAction(
+            R.drawable.ic_baseline_check_circle_24,
+            applicationContext.getString(R.string.icon_label),
+            contentPendingIntent
+        )
+
 
     // Deliver the notification
     notify(NOTIFICATION_ID, builder.build())
