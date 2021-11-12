@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
 
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-            //custom_button.buttonState = ButtonState.Completed
+            custom_button.buttonState = ButtonState.Completed
             Log.d("WWD", "in receiver on receive")
            // loadingButton.buttonState = ButtonState.Completed
             val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
