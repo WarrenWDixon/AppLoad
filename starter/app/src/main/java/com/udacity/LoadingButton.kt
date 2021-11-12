@@ -93,12 +93,12 @@ class LoadingButton @JvmOverloads constructor(
                 canvas?.drawRect(0f, 0f, animWidth, heightSize.toFloat(), downloadPaint)
                 var oval = RectF(
                     500f,
-                    10f,
-                    500f + (heightSize.toFloat() * 0.7f),
-                    10f + (heightSize.toFloat() * 0.7f)
+                    5f,
+                    500f + (heightSize.toFloat() * 0.9f),
+                    5f + (heightSize.toFloat() * 0.9f)
                 )
                 canvas?.drawArc(oval, 0f, sweepAngle, true, circlePaint)
-                canvas?.drawText("We are loading", 200.0f, 75.0f, buttonTextPaint)
+                canvas?.drawText("We are loading", 150.0f, 75.0f, buttonTextPaint)
             }
         }
     }
