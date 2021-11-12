@@ -4,6 +4,7 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.RectF
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
@@ -15,40 +16,91 @@ class LoadingButton @JvmOverloads constructor(
 ) : View(context, attrs, defStyleAttr) {
     private var widthSize = 0
     private var heightSize = 0
+    private  var myCanvas: Canvas? = null
+    private val valueAnimator = ValueAnimator.ofFloat(0f, 1f)
+    private var animWidth = 0f
+    private var sweepAngle = 0f
 
-    private val valueAnimator = ValueAnimator()
-    private val buttonBackgroundPaint = Paint().apply {
+    val buttonBackgroundPaint = Paint().apply {
         // Smooth out edges of what is drawn without affecting shape.
         isAntiAlias = true
         color = ContextCompat.getColor(context, R.color.buttonBackground)
     }
 
-    private val buttonTextPaint = Paint().apply {
+    val buttonTextPaint = Paint().apply {
         isAntiAlias = true
         color = ContextCompat.getColor(context, R.color.white)
         textSize = 50.0f
 
     }
-    private var buttonState: ButtonState by Delegates.observable<ButtonState>(ButtonState.Completed) { p, old, new ->
+    val circlePaint = Paint().apply {
+        isAntiAlias = true
+        color = ContextCompat.getColor(context, R.color.circleBackground)
+        textSize = 50.0f
 
     }
+
+    val downloadPaint = Paint().apply {
+        color = ContextCompat.getColor(context, R.color.downloadGreen)
+        isAntiAlias = true
+    }
+
+    public var buttonState: ButtonState by Delegates.observable<ButtonState>(ButtonState.Completed) { p, old, new ->
+        when (new) {
+            ButtonState.Clicked -> Log.d("WWD", "button clicked")
+            ButtonState.Loading -> do_animation()
+            ButtonState.Completed ->stop_animation()
+        }
+    }
+
+    private fun stop_animation() {
+        valueAnimator.end()
+    }
+
 
 
     init {
 
     }
 
+    public fun do_animation() {
+        Log.d("WWD", " in do_animation")
+        valueAnimator.duration = 3000
+        valueAnimator.addUpdateListener {
+            animWidth = it.animatedFraction * widthSize.toFloat()
+            sweepAngle = it.animatedFraction * 360f
+            invalidate()
+        }
+        Log.d("WWD", "call animation start")
+        valueAnimator.start()
+
+    }
+
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
+        Log.d("WWD", "in onDraw buttonState is $buttonState")
         canvas?.drawColor(ContextCompat.getColor(context, R.color.buttonBackground))
-        canvas?.drawRect(0f, 0f, 200f, 200f, buttonBackgroundPaint )
-       // if (buttonState == ButtonState.Loading) {
-            canvas?.drawRect(0f, 0f, 0.0f, 0.0f, buttonBackgroundPaint)
-       // }
-        //buttonTextPaint.textAlign = Paint.Align.CENTER
-        canvas?.drawText("Download", 200.0f, 75.0f, buttonTextPaint)
+        canvas?.drawRect(0f, 0f, widthSize.toFloat(), heightSize.toFloat(), buttonBackgroundPaint )
+        when (buttonState) {
+            ButtonState.Start, ButtonState.Completed -> {
+                Log.d("WWD", "draw download button")
+                canvas?.drawText("Download", 200.0f, 75.0f, buttonTextPaint)
+            }
 
+            ButtonState.Clicked, ButtonState.Loading -> {
+                Log.d("WWD", "doing animation w: $animWidth  angle: $sweepAngle")
+                canvas?.drawRect(0f, 0f, animWidth, heightSize.toFloat(), downloadPaint)
+                var oval = RectF(
+                    500f,
+                    10f,
+                    500f + (heightSize.toFloat() * 0.7f),
+                    10f + (heightSize.toFloat() * 0.7f)
+                )
+                canvas?.drawArc(oval, 0f, sweepAngle, true, circlePaint)
+                canvas?.drawText("We are loading", 200.0f, 75.0f, buttonTextPaint)
+            }
+        }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {

@@ -5,4 +5,6 @@
     <color name="colorAccent">#F9A825</color>
     <color name="white">#FFFFFF</color>
     <color name="buttonBackground">#57BEA9</color>
+    <color name="circleBackground">#f9dc5c</color>
+    <color name="downloadGreen">#008975</color>
 </resources>

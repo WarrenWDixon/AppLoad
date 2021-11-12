@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var pendingIntent: PendingIntent
     private lateinit var action: NotificationCompat.Action
     private var repository: Repository = Repository.NONE
+    //val loadingButton = LoadingButton(this)
     private enum class Repository(val url: String) {
         NONE(""),
         BUMPTECH("https://github.com/bumptech/glide"),
@@ -45,15 +46,20 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         registerReceiver(receiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
-
+        custom_button.buttonState = ButtonState.Start
         custom_button.setOnClickListener {
             download()
+            custom_button.buttonState = ButtonState.Loading
         }
+
+
     }
 
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
+            //custom_button.buttonState = ButtonState.Completed
             Log.d("WWD", "in receiver on receive")
+           // loadingButton.buttonState = ButtonState.Completed
             val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
             createChannel(getString(R.string.download_notification_channel_id), getString(R.string.download_notification_channel_name))
             val notificationManager = ContextCompat.getSystemService(
@@ -71,6 +77,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun download() {
         Log.d("WWD", "in download")
+        custom_button.buttonState = ButtonState.Loading
+      // loadingButton.buttonState = ButtonState.Clicked
         if (repository == Repository.NONE) {
             Toast.makeText(this, "PLEASE SELECT A URL ABOVE", Toast.LENGTH_LONG).show()
             return;
@@ -88,6 +96,7 @@ class MainActivity : AppCompatActivity() {
         val downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
         downloadID =
             downloadManager.enqueue(request)// enqueue puts the download request in the queue.
+       //loadingButton.buttonState = ButtonState.Loading
     }
 
     companion object {
