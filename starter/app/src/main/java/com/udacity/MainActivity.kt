@@ -61,6 +61,7 @@ class MainActivity : AppCompatActivity() {
         override fun onReceive(context: Context?, intent: Intent?) {
             custom_button.buttonState = ButtonState.Completed
             Log.d("WWD", "in receiver on receive")
+            downloadStatus = "SUCCESS"
            // loadingButton.buttonState = ButtonState.Completed
             val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
             createChannel(getString(R.string.download_notification_channel_id), getString(R.string.download_notification_channel_name))
@@ -118,17 +119,23 @@ class MainActivity : AppCompatActivity() {
                 R.id.radio_glide ->
                     if (checked) {
                         repository = Repository.BUMPTECH
+                        repoName = "BUMPTECH"
                     }
                 R.id.radio_udacity ->
                     if (checked) {
                         repository = Repository.UDACITY
+                        repoName = "UDACITY"
                     }
                 R.id.radio_retrofit ->
                     if (checked) {
                         repository = Repository.RETROFIT
+                        repoName = "RETROFIT"
                     }
-                else ->
+                else -> {
                     repository = Repository.NONE
+                    repoName = "NONE"
+                }
+
             }
         }
     }

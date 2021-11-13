@@ -1,5 +1,6 @@
 package com.udacity
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_detail.*
@@ -13,6 +14,10 @@ class DetailActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         tv_repo_name.text = repoName
         tv_download_status.text = downloadStatus
+        btn_return.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 }
