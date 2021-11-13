@@ -22,6 +22,8 @@ import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
+    var repoName: String = ""
+    var downloadStatus: String = ""
 
 class MainActivity : AppCompatActivity() {
 
