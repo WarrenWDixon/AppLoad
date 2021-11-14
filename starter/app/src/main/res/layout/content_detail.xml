@@ -8,7 +8,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".DetailActivity"
     tools:showIn="@layout/activity_detail"
-    app:layoutDescription="@xml/detail_motion">>
+    app:layoutDescription="@xml/detail_motion">
 
 
     <TextView
@@ -66,5 +66,4 @@
         android:textSize="24sp"
         android:text="RETURN"
         android:textColor="@color/white"/>
-
 </androidx.constraintlayout.motion.widget.MotionLayout>

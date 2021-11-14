@@ -7,4 +7,5 @@
     <color name="buttonBackground">#57BEA9</color>
     <color name="circleBackground">#f9dc5c</color>
     <color name="downloadGreen">#008975</color>
+    <color name="detailBackground">#03DAC5</color>
 </resources>
