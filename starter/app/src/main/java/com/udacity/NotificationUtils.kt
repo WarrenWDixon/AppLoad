@@ -48,13 +48,13 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         .setContentTitle(applicationContext
             .getString(R.string.notification_title))
         .setContentText(messageBody)
-        .setContentIntent(contentPendingIntent)
+        //.setContentIntent(contentPendingIntent)
         .setStyle(bigPicStyle)
         .addAction(
             R.drawable.ic_baseline_check_circle_24,
             applicationContext.getString(R.string.icon_label),
             contentPendingIntent
-        )
+        ) 
 
 
     // Deliver the notification

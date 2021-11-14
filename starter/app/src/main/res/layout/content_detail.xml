@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".DetailActivity"
-    tools:showIn="@layout/activity_detail">
+    tools:showIn="@layout/activity_detail"
+    app:layoutDescription="@xml/detail_motion">>
 
 
     <TextView
@@ -16,11 +18,7 @@
         android:layout_marginTop="96dp"
         android:text="DOWNLOAD DETAILS"
         android:textSize="36sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/tv_repo_lbl"
@@ -28,10 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="Repository Name"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/tv_repo_name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:textSize="24sp"/>
 
     <TextView
         android:id="@+id/tv_repo_name"
@@ -39,12 +34,6 @@
         android:layout_height="wrap_content"
         android:textSize="36sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.50"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.382"
         tools:text="GITHUB" />
 
     <TextView
@@ -53,11 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="Download Status"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/tv_download_status"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:textSize="24sp"/>
 
     <TextView
         android:id="@+id/tv_download_status"
@@ -67,9 +52,6 @@
         android:alpha="0"
         android:textSize="36sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_repo_name"
         tools:text="Success" />
 
     <Button
@@ -83,10 +65,6 @@
         android:padding="16dp"
         android:textSize="24sp"
         android:text="RETURN"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_download_status" />
+        android:textColor="@color/white"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>
