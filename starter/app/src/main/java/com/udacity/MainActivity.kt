@@ -33,7 +33,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var pendingIntent: PendingIntent
     private lateinit var action: NotificationCompat.Action
     private var repository: Repository = Repository.NONE
-    //val loadingButton = LoadingButton(this)
     private enum class Repository(val url: String) {
         NONE(""),
         BUMPTECH("https://github.com/bumptech/glide"),
@@ -42,7 +41,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d("WWD", "in onCreate main activity")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
@@ -51,18 +49,13 @@ class MainActivity : AppCompatActivity() {
         custom_button.buttonState = ButtonState.Start
         custom_button.setOnClickListener {
             download()
-            custom_button.buttonState = ButtonState.Loading
         }
-
-
     }
 
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             custom_button.buttonState = ButtonState.Completed
-            Log.d("WWD", "in receiver on receive")
             downloadStatus = "SUCCESS"
-           // loadingButton.buttonState = ButtonState.Completed
             val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
             createChannel(getString(R.string.download_notification_channel_id), getString(R.string.download_notification_channel_name))
             val notificationManager = ContextCompat.getSystemService(
@@ -80,14 +73,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun download() {
         Log.d("WWD", "in download")
-        custom_button.buttonState = ButtonState.Loading
       // loadingButton.buttonState = ButtonState.Clicked
         if (repository == Repository.NONE) {
             Toast.makeText(this, "PLEASE SELECT A URL ABOVE", Toast.LENGTH_LONG).show()
             return;
         }
+        custom_button.buttonState = ButtonState.Loading
         var downloadUrl = repository.url + "archive/master.zip"
-        Log.d("WWD", "the url is " + downloadUrl)
         val request =
             DownloadManager.Request(Uri.parse(downloadUrl))
                 .setTitle(getString(R.string.app_name))
@@ -99,7 +91,6 @@ class MainActivity : AppCompatActivity() {
         val downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
         downloadID =
             downloadManager.enqueue(request)// enqueue puts the download request in the queue.
-       //loadingButton.buttonState = ButtonState.Loading
     }
 
     companion object {

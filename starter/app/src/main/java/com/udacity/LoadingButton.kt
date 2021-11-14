@@ -22,7 +22,6 @@ class LoadingButton @JvmOverloads constructor(
     private var sweepAngle = 0f
 
     val buttonBackgroundPaint = Paint().apply {
-        // Smooth out edges of what is drawn without affecting shape.
         isAntiAlias = true
         color = ContextCompat.getColor(context, R.color.buttonBackground)
     }
@@ -57,39 +56,30 @@ class LoadingButton @JvmOverloads constructor(
         valueAnimator.end()
     }
 
-
-
     init {
 
     }
 
     public fun do_animation() {
-        Log.d("WWD", " in do_animation")
         valueAnimator.duration = 3000
         valueAnimator.addUpdateListener {
             animWidth = it.animatedFraction * widthSize.toFloat()
             sweepAngle = it.animatedFraction * 360f
             invalidate()
         }
-        Log.d("WWD", "call animation start")
         valueAnimator.start()
-
     }
-
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        Log.d("WWD", "in onDraw buttonState is $buttonState")
         canvas?.drawColor(ContextCompat.getColor(context, R.color.buttonBackground))
         canvas?.drawRect(0f, 0f, widthSize.toFloat(), heightSize.toFloat(), buttonBackgroundPaint )
         when (buttonState) {
             ButtonState.Start, ButtonState.Completed -> {
-                Log.d("WWD", "draw download button")
                 canvas?.drawText("Download", 200.0f, 75.0f, buttonTextPaint)
             }
 
             ButtonState.Clicked, ButtonState.Loading -> {
-                Log.d("WWD", "doing animation w: $animWidth  angle: $sweepAngle")
                 canvas?.drawRect(0f, 0f, animWidth, heightSize.toFloat(), downloadPaint)
                 var oval = RectF(
                     500f,
@@ -113,7 +103,6 @@ class LoadingButton @JvmOverloads constructor(
         )
         widthSize = w
         heightSize = h
-        Log.d("WWD", " ----------- in onMeasure width is $widthSize and height is $heightSize")
         setMeasuredDimension(w, h)
     }
 

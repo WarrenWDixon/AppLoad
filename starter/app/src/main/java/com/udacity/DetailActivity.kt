@@ -25,7 +25,6 @@ class DetailActivity : AppCompatActivity() {
     }
 
         fun animateButton() {
-            Log.d("WWD", "in animateButton")
             tv_download_status.alpha = 0f
             tv_download_status.visibility = View.VISIBLE
             val alphaAnimator = ValueAnimator.ofFloat(0f, 1f)
@@ -33,7 +32,6 @@ class DetailActivity : AppCompatActivity() {
 
             alphaAnimator.addUpdateListener {
                 val animationAlpha = it.animatedValue as Float
-                Log.d("WWD", "animationAlpha is $animationAlpha")
                 tv_download_status.alpha = animationAlpha
             }
             alphaAnimator.start()
